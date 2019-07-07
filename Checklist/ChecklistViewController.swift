@@ -11,11 +11,14 @@ import UIKit
 class ChecklistViewController: UITableViewController {
     
     var checkListItemArray: Array = [ChecklistItem]()
-    let total = 5
+    var total = 5
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
         let todos = ["Walk the dog", "Brush my teeth", "Learn iOS develoment",
                      "Soccer practice", "Eat ice cream"]
         for todo in todos {
@@ -71,6 +74,20 @@ class ChecklistViewController: UITableViewController {
         } else {
             cell.accessoryType = .none
         }
+    }
+    
+    //MARK:- Actions
+    @IBAction func addItem() {
+        let newIndex = checkListItemArray.count
+        
+        let newItem = ChecklistItem()
+        newItem.todo = "I am a new item"
+        checkListItemArray.append(newItem)
+        
+        let indexPath = IndexPath(row: newIndex, section: 0)
+        let indexPaths = [indexPath]
+        total += 1
+        tableView.insertRows(at: indexPaths, with: .automatic)
     }
 }
 

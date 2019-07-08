@@ -16,9 +16,7 @@ class ChecklistViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
+//        navigationController?.navigationBar.prefersLargeTitles = true
         let todos = ["Walk the dog", "Brush my teeth", "Learn iOS develoment",
                      "Soccer practice", "Eat ice cream"]
         for todo in todos {
@@ -42,6 +40,11 @@ class ChecklistViewController: UITableViewController {
         configureCheckMark(for: cell, with: item)
         configureLabel(for: cell, with: item)
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        checkListItemArray.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
     // MARK:- Table View Delegate

@@ -49,7 +49,7 @@
                     <navigationItem key="navigationItem" title="Checklists" id="WEh-SJ-QEq">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="WLp-qj-aKR">
                             <connections>
-                                <action selector="addItem" destination="cT0-hH-Ge5" id="2BK-oU-8wn"/>
+                                <segue destination="eM9-If-SWi" kind="show" id="Yge-G2-805"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -58,13 +58,53 @@
             </objects>
             <point key="canvasLocation" x="1024.8" y="-406.14692653673166"/>
         </scene>
+        <!--Add Item-->
+        <scene sceneID="Hhb-dW-bYp">
+            <objects>
+                <tableViewController id="eM9-If-SWi" customClass="AddItemViewController" customModule="Checklist" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="bHq-r3-MOA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Azf-Bk-BYk">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Azf-Bk-BYk" id="pgA-Pa-5gd">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="eM9-If-SWi" id="pEB-Ha-94X"/>
+                            <outlet property="delegate" destination="eM9-If-SWi" id="dbg-X6-Dwf"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Add Item" largeTitleDisplayMode="never" id="g5q-uY-6W9">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Xpo-DP-Fkx">
+                            <connections>
+                                <action selector="cancel" destination="eM9-If-SWi" id="h63-Rl-nJB"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="CmS-qH-DEK">
+                            <connections>
+                                <action selector="done" destination="eM9-If-SWi" id="8GD-qv-lvO"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KQj-fL-Qow" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1978" y="-591"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="6qR-qD-wyn">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GUh-7R-Uov" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="erl-kk-W93">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="erl-kk-W93">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

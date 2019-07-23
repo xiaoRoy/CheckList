@@ -14,6 +14,11 @@ class AddItemViewController: UITableViewController {
         super.viewDidLoad()
     }
     
+    //MARK: Tabel View Delegates
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        return nil
+    }
+    
     //MARK:- Actions
     @IBAction func done() {
         navigationController?.popViewController(animated: true)

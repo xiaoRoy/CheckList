@@ -24,6 +24,8 @@ class ChecklistViewController: UITableViewController {
             checkListItem.todo = todo
             checkListItemArray.append(checkListItem)
         }
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     // MARK:- Table View Data Source
@@ -66,8 +68,11 @@ class ChecklistViewController: UITableViewController {
     
     func configureLabel(for cell: UITableViewCell,
                         with item: ChecklistItem) {
-        let label = cell.viewWithTag(1000) as! UILabel
-        label.text = item.todo
+        if let label = cell.viewWithTag(1000) as? UILabel {
+            label.text = item.todo
+        }
+//        let label = cell.viewWithTag(1000) as! UILabel
+//        label.text = item.todo
     }
     
     func configureCheckMark(for cell: UITableViewCell,

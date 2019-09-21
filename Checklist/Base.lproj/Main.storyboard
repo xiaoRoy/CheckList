@@ -76,13 +76,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name of the Item" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Hi-tZ-bo1">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name of the Item" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="3Hi-tZ-bo1">
                                                     <rect key="frame" x="16" y="8" width="343" height="27.5"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                     <connections>
                                                         <action selector="done" destination="eM9-If-SWi" eventType="editingDidEndOnExit" id="kLM-b5-svW"/>
+                                                        <outlet property="delegate" destination="eM9-If-SWi" id="GRG-S1-zpz"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -108,13 +109,14 @@
                                 <action selector="cancel" destination="eM9-If-SWi" id="h63-Rl-nJB"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="CmS-qH-DEK">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" style="done" systemItem="done" id="CmS-qH-DEK">
                             <connections>
                                 <action selector="done" destination="eM9-If-SWi" id="8GD-qv-lvO"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="barButtonItemDone" destination="CmS-qH-DEK" id="ePx-vV-EMS"/>
                         <outlet property="textField" destination="3Hi-tZ-bo1" id="Cl3-k1-sGt"/>
                     </connections>
                 </tableViewController>

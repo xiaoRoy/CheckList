@@ -24,8 +24,7 @@ class ChecklistViewController: UITableViewController {
             checkListItem.todo = todo
             checkListItemArray.append(checkListItem)
         }
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     // MARK:- Table View Data Source

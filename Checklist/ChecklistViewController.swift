@@ -8,10 +8,9 @@
 
 import UIKit
 
-class ChecklistViewController: UITableViewController {
+class ChecklistViewController: UITableViewController, AddItemViewControllerDelegate {
     
     var checkListItemArray: Array = [ChecklistItem]()
-    var total = 5
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +24,13 @@ class ChecklistViewController: UITableViewController {
             checkListItemArray.append(checkListItem)
         }
 //        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AddItem" {
+            let controller = segue.destination as! AddItemViewController
+            controller.addItemViewControllerDelegate = self
+        }
     }
     
     // MARK:- Table View Data Source
@@ -59,10 +65,20 @@ class ChecklistViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    // MARK:- Add Item View Controller Delegates
+    func addItemViewControllerDidCancle(_ controller: AddItemViewController) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem) {
+        addItemViewForController(controller, didFinishItem: item)
+        navigationController?.popViewController(animated: true)
+    }
+    
     
     //MARK:- Setup Cell
     func getCheckListItem(at indexPath: IndexPath) -> ChecklistItem {
-        return checkListItemArray[indexPath.row % total]
+        return checkListItemArray[indexPath.row % checkListItemArray.count]
     }
     
     func configureLabel(for cell: UITableViewCell,
@@ -83,18 +99,14 @@ class ChecklistViewController: UITableViewController {
         }
     }
     
-    //MARK:- Actions
-    @IBAction func addItem() {
-        let newIndex = checkListItemArray.count
+    private func addItemViewForController(_ addItemViewController: AddItemViewController, didFinishItem item: ChecklistItem) {
         
-        let newItem = ChecklistItem()
-        newItem.todo = "I am a new item"
-        checkListItemArray.append(newItem)
+        let newIndex = checkListItemArray.count
+        checkListItemArray.append(item)
         
         let indexPath = IndexPath(row: newIndex, section: 0)
         let indexPaths = [indexPath]
-        total += 1
-        tableView.insertRows(at: indexPaths, with: .automatic)
+        tableView.insertRows(at: indexPaths, with:.automatic)
     }
 }
 

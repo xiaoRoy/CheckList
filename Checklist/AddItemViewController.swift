@@ -8,11 +8,22 @@
 
 import UIKit
 
+protocol AddItemViewControllerDelegate: class {
+    
+    func addItemViewControllerDidCancle(_ controller: AddItemViewController)
+    
+    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem)
+    
+}
+
 class AddItemViewController: UITableViewController, UITextFieldDelegate {
 
     @IBOutlet weak var textField: UITextField!
     
     @IBOutlet weak var barButtonItemDone: UIBarButtonItem!
+    
+    weak var addItemViewControllerDelegate: AddItemViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 //        navigationItem.largeTitleDisplayMode = .never
@@ -43,11 +54,12 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     
     //MARK:- Actions
     @IBAction func done() {
-        print("Content of the text field:\(textField.text!)");
-        navigationController?.popViewController(animated: true)
+        let item = ChecklistItem()
+        item.todo = textField.text!
+        addItemViewControllerDelegate?.addItemViewController(self, didFinishAdding: item)
     }
     
     @IBAction func cancel() {
-        navigationController?.popViewController(animated: true)
+        addItemViewControllerDelegate?.addItemViewControllerDidCancle(self)
     }
 }

@@ -92,11 +92,13 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
     
     func configureCheckMark(for cell: UITableViewCell,
                             with item: ChecklistItem) {
-        if item.completed {
-            cell.accessoryType = .checkmark
-        } else {
-            cell.accessoryType = .none
-        }
+        let lebel = cell.viewWithTag(1001) as! UILabel
+        lebel.text = item.completed ? "√" : ""
+//        if item.completed {
+//            cell.accessoryType = .checkmark
+//        } else {
+//            cell.accessoryType = .none
+//        }
     }
     
     private func addItemViewForController(_ addItemViewController: AddItemViewController, didFinishItem item: ChecklistItem) {

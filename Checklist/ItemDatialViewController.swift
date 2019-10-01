@@ -8,17 +8,17 @@
 
 import UIKit
 
-protocol AddItemViewControllerDelegate: class {
+protocol ItemDetailViewControllerDelegate: class {
     
-    func addItemViewControllerDidCancle(_ controller: AddItemViewController)
+    func itemDetailViewControllerDidCancle(_ controller: ItemDatialViewController)
     
-    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem)
+    func itemDetailViewController(_ controller: ItemDatialViewController, didFinishAdding item: ChecklistItem)
     
-    func addItemViewController(_ controller: AddItemViewController, didFininishEditing item: ChecklistItem)
+    func itemDetailViewController(_ controller: ItemDatialViewController, didFininishEditing item: ChecklistItem)
     
 }
 
-class AddItemViewController: UITableViewController, UITextFieldDelegate {
+class ItemDatialViewController: UITableViewController, UITextFieldDelegate {
 
     @IBOutlet weak var textField: UITextField!
     
@@ -26,7 +26,7 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     
     var itemToEdit: ChecklistItem?
     
-    weak var addItemViewControllerDelegate: AddItemViewControllerDelegate?
+    weak var itemDetailViewControllerDelegate: ItemDetailViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,14 +65,14 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     @IBAction func done() {
         if let checkListItem = itemToEdit {
             checkListItem.todo = textField.text!
-            addItemViewControllerDelegate?.addItemViewController(self, didFininishEditing: checkListItem)
+            itemDetailViewControllerDelegate?.itemDetailViewController(self, didFininishEditing: checkListItem)
         }
         let item = ChecklistItem()
         item.todo = textField.text!
-        addItemViewControllerDelegate?.addItemViewController(self, didFinishAdding: item)
+        itemDetailViewControllerDelegate?.itemDetailViewController(self, didFinishAdding: item)
     }
     
     @IBAction func cancel() {
-        addItemViewControllerDelegate?.addItemViewControllerDidCancle(self)
+        itemDetailViewControllerDelegate?.itemDetailViewControllerDidCancle(self)
     }
 }

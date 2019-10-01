@@ -30,6 +30,11 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         if segue.identifier == "AddItem" {
             let controller = segue.destination as! AddItemViewController
             controller.addItemViewControllerDelegate = self
+        } else if segue.identifier == "EditItem" {
+            let controller = segue.destination as! AddItemViewController
+            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
+                controller.itemToEdit = checkListItemArray[indexPath.row]
+            }
         }
     }
     
@@ -75,6 +80,16 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         navigationController?.popViewController(animated: true)
     }
     
+    func addItemViewController(_ controller: AddItemViewController, didFininishEditing item: ChecklistItem) {
+        if let index = checkListItemArray.index(of: item) {
+            let indexPath = IndexPath(row: index, section: 0)
+            if let cell = tableView.cellForRow(at: indexPath) {
+                configureLabel(for: cell, with: item)
+            }
+        }
+        navigationController?.popViewController(animated: true)
+    }
+    
     
     //MARK:- Setup Cell
     func getCheckListItem(at indexPath: IndexPath) -> ChecklistItem {
@@ -92,13 +107,9 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
     
     func configureCheckMark(for cell: UITableViewCell,
                             with item: ChecklistItem) {
-        let lebel = cell.viewWithTag(1001) as! UILabel
-        lebel.text = item.completed ? "√" : ""
-//        if item.completed {
-//            cell.accessoryType = .checkmark
-//        } else {
-//            cell.accessoryType = .none
-//        }
+        if let label = cell.viewWithTag(1001) as? UILabel {
+            label.text = item.completed ? "√" : ""
+        }
     }
     
     private func addItemViewForController(_ addItemViewController: AddItemViewController, didFinishItem item: ChecklistItem) {

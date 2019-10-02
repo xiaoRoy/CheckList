@@ -9,8 +9,14 @@
 import Foundation
 
 class ChecklistItem: NSObject, Codable {
-    var todo = ""
-    var completed = false
+    var todo: String
+    var completed: Bool
+    
+    override init() {
+        todo = ""
+        completed = false
+        super.init()
+    }
     
     func toggle() {
         completed = !completed

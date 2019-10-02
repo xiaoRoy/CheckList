@@ -14,6 +14,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadChecklistItems()
         // Do any additional setup after loading the view, typically from a nib.
 //        navigationController?.navigationBar.prefersLargeTitles = true
 //        let todos = ["Walk the dog", "Brush my teeth", "Learn iOS develoment",
@@ -29,6 +30,21 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AddItem" {
+            let controller = segue.destination as! ItemDatialViewController
+            controller.itemDetailViewControllerDelegate = self
+        } else if segue.identifier == "EditItem" {
+            let controller = segue.destination as! ItemDatialViewController
+            controller.itemDetailViewControllerDelegate = self
+            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
+                controller.itemToEdit = checkListItemArray[indexPath.row]
+            }
+            
+        }
+    }
+    
+    //MARK:- PList
     func documentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
@@ -48,19 +64,20 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "AddItem" {
-            let controller = segue.destination as! ItemDatialViewController
-            controller.itemDetailViewControllerDelegate = self
-        } else if segue.identifier == "EditItem" {
-            let controller = segue.destination as! ItemDatialViewController
-            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
-                controller.itemToEdit = checkListItemArray[indexPath.row]
+    func loadChecklistItems() {
+        let path = dataFilePath()
+        if let data = try? Data(contentsOf: path) {
+            let decoder = PropertyListDecoder()
+            do {
+                checkListItemArray = try decoder.decode([ChecklistItem].self, from: data)
+            } catch {
+                print("Error decoding item array: \(error.localizedDescription)")
             }
         }
     }
     
-    // MARK:- Table View Data Source
+    
+    // MARK:- Table View Data Source(UITableViewDataSource)
     override func tableView(_ tableView: UITableView,
                             numberOfRowsInSection section: Int) -> Int {
         return checkListItemArray.count
@@ -76,13 +93,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        checkListItemArray.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .automatic)
-        saveChecklistItems()
-    }
-    
-    // MARK:- Table View Delegate
+    // MARK:- Table View Delegate(UITableViewDelegate)
     override func tableView(_ tableView: UITableView,
                             didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) {
@@ -94,7 +105,13 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         saveChecklistItems()
     }
     
-    // MARK:- Add Item View Controller Delegates
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        checkListItemArray.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        saveChecklistItems()
+    }
+    
+    // MARK:- Item Detial View Controller Delegates
     func itemDetailViewControllerDidCancle(_ controller: ItemDatialViewController) {
         navigationController?.popViewController(animated: true)
     }

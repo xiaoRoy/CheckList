@@ -16,14 +16,36 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 //        navigationController?.navigationBar.prefersLargeTitles = true
-        let todos = ["Walk the dog", "Brush my teeth", "Learn iOS develoment",
-                     "Soccer practice", "Eat ice cream"]
-        for todo in todos {
-            let checkListItem = ChecklistItem()
-            checkListItem.todo = todo
-            checkListItemArray.append(checkListItem)
-        }
+//        let todos = ["Walk the dog", "Brush my teeth", "Learn iOS develoment",
+//                     "Soccer practice", "Eat ice cream"]
+//        for todo in todos {
+//            let checkListItem = ChecklistItem()
+//            checkListItem.todo = todo
+//            checkListItemArray.append(checkListItem)
+//        }
+//        print("Document folder is \(documentsDirectory())")
+//        print("Data file path is \(dataFilePath())")
 //        navigationController?.navigationBar.prefersLargeTitles = true
+        
+    }
+    
+    func documentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+    
+    func dataFilePath() -> URL{
+        return documentsDirectory().appendingPathComponent("CheckList.plist")
+    }
+    
+    func saveChecklistItems() {
+        let encoder = PropertyListEncoder()
+        do {
+            let data = try encoder.encode(checkListItemArray)
+            try data.write(to: dataFilePath(), options: Data.WritingOptions.atomic)
+        } catch {
+            print("Error encoding tiem arry: \(error.localizedDescription)")
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -57,6 +79,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         checkListItemArray.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
+        saveChecklistItems()
     }
     
     // MARK:- Table View Delegate
@@ -68,6 +91,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
             configureCheckMark(for: cell, with: item)
         }
         tableView.deselectRow(at: indexPath, animated: true)
+        saveChecklistItems()
     }
     
     // MARK:- Add Item View Controller Delegates
@@ -77,6 +101,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     
     func itemDetailViewController(_ controller: ItemDatialViewController, didFinishAdding item: ChecklistItem) {
         addItemViewForController(controller, didFinishItem: item)
+        saveChecklistItems()
         navigationController?.popViewController(animated: true)
     }
     
@@ -87,6 +112,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
                 configureLabel(for: cell, with: item)
             }
         }
+        saveChecklistItems()
         navigationController?.popViewController(animated: true)
     }
     

@@ -31,11 +31,11 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "AddItem" {
-            let controller = segue.destination as! ItemDatialViewController
+        if segue.identifier == ItemDetailViewType.add.rawValue {
+            let controller = segue.destination as! ItemDetialViewController
             controller.itemDetailViewControllerDelegate = self
-        } else if segue.identifier == "EditItem" {
-            let controller = segue.destination as! ItemDatialViewController
+        } else if segue.identifier == ItemDetailViewType.edit.rawValue {
+            let controller = segue.destination as! ItemDetialViewController
             controller.itemDetailViewControllerDelegate = self
             if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
                 controller.itemToEdit = checkListItemArray[indexPath.row]
@@ -112,17 +112,17 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     }
     
     // MARK:- Item Detial View Controller Delegates
-    func itemDetailViewControllerDidCancle(_ controller: ItemDatialViewController) {
+    func itemDetailViewControllerDidCancle(_ controller: ItemDetialViewController) {
         navigationController?.popViewController(animated: true)
     }
     
-    func itemDetailViewController(_ controller: ItemDatialViewController, didFinishAdding item: ChecklistItem) {
+    func itemDetailViewController(_ controller: ItemDetialViewController, didFinishAdding item: ChecklistItem) {
         addItemViewForController(controller, didFinishItem: item)
         saveChecklistItems()
         navigationController?.popViewController(animated: true)
     }
     
-    func itemDetailViewController(_ controller: ItemDatialViewController, didFininishEditing item: ChecklistItem) {
+    func itemDetailViewController(_ controller: ItemDetialViewController, didFininishEditing item: ChecklistItem) {
         if let index = checkListItemArray.index(of: item) {
             let indexPath = IndexPath(row: index, section: 0)
             if let cell = tableView.cellForRow(at: indexPath) {
@@ -155,7 +155,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         }
     }
     
-    private func addItemViewForController(_ addItemViewController: ItemDatialViewController, didFinishItem item: ChecklistItem) {
+    private func addItemViewForController(_ addItemViewController: ItemDetialViewController, didFinishItem item: ChecklistItem) {
         
         let newIndex = checkListItemArray.count
         checkListItemArray.append(item)
@@ -164,5 +164,10 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         let indexPaths = [indexPath]
         tableView.insertRows(at: indexPaths, with:.automatic)
     }
+}
+
+enum ItemDetailViewType: String {
+    case add = "AddItem"
+    case edit = "EditItem"
 }
 

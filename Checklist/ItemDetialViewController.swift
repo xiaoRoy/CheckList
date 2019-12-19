@@ -18,6 +18,8 @@ protocol ItemDetailViewControllerDelegate: class {
     
 }
 
+
+
 class ItemDetialViewController: UITableViewController, UITextFieldDelegate {
 
     @IBOutlet weak var textField: UITextField!
@@ -66,10 +68,11 @@ class ItemDetialViewController: UITableViewController, UITextFieldDelegate {
         if let checkListItem = itemToEdit {
             checkListItem.todo = textField.text!
             itemDetailViewControllerDelegate?.itemDetailViewController(self, didFininishEditing: checkListItem)
+        }  else {
+            let item = ChecklistItem()
+            item.todo = textField.text!
+            itemDetailViewControllerDelegate?.itemDetailViewController(self, didFinishAdding: item)
         }
-        let item = ChecklistItem()
-        item.todo = textField.text!
-        itemDetailViewControllerDelegate?.itemDetailViewController(self, didFinishAdding: item)
     }
     
     @IBAction func cancel() {

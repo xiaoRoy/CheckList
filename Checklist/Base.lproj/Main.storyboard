@@ -60,7 +60,7 @@
                             <outlet property="delegate" destination="cT0-hH-Ge5" id="WZt-Rk-Lk0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Checklists" id="WEh-SJ-QEq">
+                    <navigationItem key="navigationItem" title="Checklist" largeTitleDisplayMode="never" id="WEh-SJ-QEq">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="WLp-qj-aKR">
                             <connections>
                                 <segue destination="eM9-If-SWi" kind="show" identifier="AddItem" id="D5Q-3a-aSJ"/>
@@ -70,7 +70,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GT9-Or-g1D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1024.8" y="-406.14692653673166"/>
+            <point key="canvasLocation" x="1167" y="-802"/>
         </scene>
         <!--Add Item-->
         <scene sceneID="Hhb-dW-bYp">
@@ -136,7 +136,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KQj-fL-Qow" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1976.8" y="-591.45427286356824"/>
+            <point key="canvasLocation" x="2016" y="-802"/>
         </scene>
         <!--All Lists-->
         <scene sceneID="Ugz-Nn-B4V">
@@ -153,12 +153,12 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="CheckLists" id="yFi-rO-Qn4"/>
                     <connections>
-                        <segue destination="cT0-hH-Ge5" kind="push" id="Q4N-71-Ews"/>
+                        <segue destination="cT0-hH-Ge5" kind="show" identifier="ShowChecklist" id="PfX-qI-VYe"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G2k-AZ-LGt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="777" y="-1055"/>
+            <point key="canvasLocation" x="306" y="-802"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6qR-qD-wyn">
@@ -171,15 +171,15 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="Lw2-gF-ZWV" kind="relationship" relationship="rootViewController" id="Uj3-hq-Xpw"/>
+                        <segue destination="Lw2-gF-ZWV" kind="relationship" relationship="rootViewController" id="W3h-cG-8RY"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vHJ-bV-rfl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="85.599999999999994" y="-406.14692653673166"/>
+            <point key="canvasLocation" x="-671" y="-592"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="bfE-NK-6fa"/>
+        <segue reference="D5Q-3a-aSJ"/>
     </inferredMetricsTieBreakers>
 </document>

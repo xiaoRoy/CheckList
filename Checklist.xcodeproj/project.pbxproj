@@ -15,6 +15,7 @@
 		C467E9C52221460500CBC3D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C467E9C42221460500CBC3D7 /* Assets.xcassets */; };
 		C467E9C82221460500CBC3D7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C467E9C62221460500CBC3D7 /* LaunchScreen.storyboard */; };
 		C4FDA3E223ABCFE300A3CFC1 /* AllListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FDA3E123ABCFE300A3CFC1 /* AllListsViewController.swift */; };
+		C4FE497E23AD2CAB00AF43C4 /* Checklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FE497D23AD2CAB00AF43C4 /* Checklist.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		C467E9C72221460500CBC3D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C467E9C92221460500CBC3D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4FDA3E123ABCFE300A3CFC1 /* AllListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListsViewController.swift; sourceTree = "<group>"; };
+		C4FE497D23AD2CAB00AF43C4 /* Checklist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checklist.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				C4075FCB22D052DB006619AC /* ChecklistItem.swift */,
 				C403139722D2395900FA86B4 /* ItemDetialViewController.swift */,
 				C467E9BB2221460400CBC3D7 /* Products */,
+				C4FE497D23AD2CAB00AF43C4 /* Checklist.swift */,
 			);
 			path = Checklist;
 			sourceTree = "<group>";
@@ -147,6 +150,7 @@
 			files = (
 				C4075FCC22D052DB006619AC /* ChecklistItem.swift in Sources */,
 				C403139822D2395900FA86B4 /* ItemDetialViewController.swift in Sources */,
+				C4FE497E23AD2CAB00AF43C4 /* Checklist.swift in Sources */,
 				C467E9C02221460400CBC3D7 /* ChecklistViewController.swift in Sources */,
 				C4FDA3E223ABCFE300A3CFC1 /* AllListsViewController.swift in Sources */,
 				C467E9BE2221460400CBC3D7 /* AppDelegate.swift in Sources */,

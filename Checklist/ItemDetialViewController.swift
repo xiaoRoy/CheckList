@@ -51,8 +51,11 @@ class ItemDetialViewController: UITableViewController, UITextFieldDelegate {
     
     //MARK:- Text Field Delegates
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+       
         let oldText = textField.text!
         let stringRange = Range(range, in: oldText)!
+        print("lower: \(stringRange.lowerBound)")
+        print("upper:\(stringRange.upperBound)")
         let newText = oldText.replacingCharacters(in: stringRange, with: string)
         barButtonItemDone.isEnabled = !newText.isEmpty
         return true

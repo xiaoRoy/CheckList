@@ -8,6 +8,13 @@
 
 import UIKit
 
+
+enum ChecklistType: String {
+    case addChecklist  = "Add Checklist"
+    case editCheckList = "Edit CheckList"
+}
+
+
 class AllListsViewController: UITableViewController {
     
     let cellIdentifier = "CheckListCell"

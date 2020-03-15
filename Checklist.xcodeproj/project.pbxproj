@@ -71,11 +71,11 @@
 				C467E9C42221460500CBC3D7 /* Assets.xcassets */,
 				C467E9C62221460500CBC3D7 /* LaunchScreen.storyboard */,
 				C467E9C92221460500CBC3D7 /* Info.plist */,
-				C4075FCB22D052DB006619AC /* ChecklistItem.swift */,
 				C403139722D2395900FA86B4 /* ItemDetialViewController.swift */,
-				C4FE497D23AD2CAB00AF43C4 /* Checklist.swift */,
-				C467E9BB2221460400CBC3D7 /* Products */,
 				C4EEF2D22414B5C000490D84 /* ListDetailViewController.swift */,
+				C4FE497D23AD2CAB00AF43C4 /* Checklist.swift */,
+				C4075FCB22D052DB006619AC /* ChecklistItem.swift */,
+				C467E9BB2221460400CBC3D7 /* Products */,
 			);
 			path = Checklist;
 			sourceTree = "<group>";

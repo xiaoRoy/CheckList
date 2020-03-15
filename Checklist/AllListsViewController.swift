@@ -10,6 +10,7 @@ import UIKit
 
 
 enum ChecklistDetailType: String {
+    
     case addChecklist  = "AddChecklist"
     case editCheckList = "EditCheckList"
 }
@@ -39,10 +40,15 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
     
     private func prepareDummyAllLists() {
-        allLists.append(Checklist(name: "Birthdays"))
-        allLists.append(Checklist(name: "Groceries"))
-        allLists.append(Checklist(name: "Cool Apps"))
-        allLists.append(Checklist(name: "To Do"))
+        let checlistNames:[String] = ["Birthdays", "Groceries", "Coll Apps", "To Do"]
+        let checlistArray = checlistNames.map({(checklistName:String) -> (Checklist) in
+            let checklist = Checklist(name: checklistName)
+            let checcklistItem = ChecklistItem()
+            checcklistItem.todo = "Item of \(checklistName)"
+            checklist.checklistItems.append(checcklistItem)
+            return checklist
+        })
+        allLists.append(contentsOf: checlistArray)
     }
     
     //MARK:- ListDetailViewControllerDelegate
@@ -52,11 +58,22 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
     
     func listDetailViewController(_ controller: ListDetailViewController, didFinishedAdding checklist: Checklist) {
-        
+        let newRowIndex = allLists.count
+        allLists.append(checklist)
+        let indexPath = IndexPath(row: newRowIndex, section: 0)
+        let indexPaths = [indexPath]
+        tableView.insertRows(at: indexPaths, with: .automatic)
+        navigationController?.popViewController(animated: true)
     }
     
     func listDetailViewController(_ controller: ListDetailViewController, didFinishedEditing checklist: Checklist) {
-        
+        if let index = allLists.index(of: checklist) {
+            let indexPath = IndexPath(row: index, section: 0)
+            if let cell = tableView.cellForRow(at: indexPath) {
+                cell.textLabel!.text = checklist.name
+            }
+        }
+        navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Table view data source
@@ -78,5 +95,19 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selsctedChecklist = allLists[indexPath.row]
         performSegue(withIdentifier: "ShowChecklist", sender: selsctedChecklist)
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        allLists.remove(at: indexPath.row)
+        let indexPaths = [indexPath]
+        tableView.deleteRows(at: indexPaths, with: .automatic)
+    }
+    
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        let destiantonController = storyboard!.instantiateViewController(withIdentifier: "ListDetailViewController") as! ListDetailViewController
+        destiantonController.delegate = self
+        let checklist = allLists[indexPath.row]
+        destiantonController.checklistToEdit = checklist
+        navigationController?.pushViewController(destiantonController, animated: true)
     }
 }

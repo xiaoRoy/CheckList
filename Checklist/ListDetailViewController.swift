@@ -26,7 +26,7 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
     
     var checklistToEdit: Checklist?
     
-    var checklistType: ChecklistType!
+    var checklistType: ChecklistDetailType!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

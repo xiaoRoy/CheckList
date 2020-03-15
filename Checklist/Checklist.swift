@@ -10,6 +10,17 @@ import UIKit
 
 class Checklist: NSObject {
     var name: String
+    var checklistItems = Array<ChecklistItem>()
+    //    var checklistItmeList = [ChecklistItem]()
+    
+    //    var checklistItmeList: Array<ChecklistItem> = Array<ChecklistItem>()
+    //    var checklistItmeList: Array<ChecklistItem> = [ChecklistItem]()
+    //    var checklistItmeList: Array<ChecklistItem> = []
+    
+    //    var checklistItmeList: [ChecklistItem] = Array<ChecklistItem>()
+    //    var checklistItmeList: [ChecklistItem] = [ChecklistItem]()
+    //    var checklistItmeList: [ChecklistItem] = []
+    
     
     init(name: String) {
         self.name = name

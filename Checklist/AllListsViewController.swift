@@ -17,7 +17,7 @@ enum ChecklistDetailType: String {
 
 
 class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate {
-   
+    
     
     let cellIdentifier = "CheckListCell"
     
@@ -26,7 +26,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        prepareDummyAllLists()
+        loadChecklists()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -52,7 +52,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
     
     //MARK:- ListDetailViewControllerDelegate
-       
+    
     func listDetailViewControllerDidCancel(_ controller: ListDetailViewController) {
         navigationController?.popViewController(animated: true)
     }
@@ -109,5 +109,39 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         let checklist = allLists[indexPath.row]
         destiantonController.checklistToEdit = checklist
         navigationController?.pushViewController(destiantonController, animated: true)
+    }
+    
+    //Mark:- Data Saving
+    
+    func documentDirectory() -> URL{
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+    
+    func checklistFilePath() -> URL {
+        print(documentDirectory())
+        return documentDirectory().appendingPathComponent("Checklists.plist")
+    }
+    
+    func saveCheckLists() {
+        let encoder = PropertyListEncoder()
+        do {
+            let data = try encoder.encode(allLists)
+            try data.write(to: checklistFilePath(), options: Data.WritingOptions.atomic)
+        } catch {
+            print("Error encoding list array:\(error.localizedDescription)")
+        }
+    }
+    
+    func loadChecklists() {
+        let path = checklistFilePath()
+        if let data = try? Data(contentsOf: path) {
+            let decoder = PropertyListDecoder()
+            do {
+                allLists = try decoder.decode([Checklist].self, from: data)
+            }catch {
+                print("Error decoding list array:\(error.localizedDescription)")
+            }
+        }
     }
 }

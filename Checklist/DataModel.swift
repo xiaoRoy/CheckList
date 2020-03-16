@@ -9,7 +9,10 @@
 import Foundation
 
 class DataModel {
+    
     var allChecklists = [Checklist]()
+    
+    let checklistIndexKey = "ChecklistIndex"
     
     init() {
         loadChecklists()
@@ -46,4 +49,19 @@ class DataModel {
             }
         }
     }
+    
+    //MARK:- User Default
+    func store(checklistIndex: Int) {
+        UserDefaults.standard.set(checklistIndex, forKey: checklistIndexKey)
+    }
+    
+    func resetChecklistIndex() {
+        UserDefaults.standard.set(-1, forKey: checklistIndexKey)
+    }
+    
+    func getChecklistIndex() -> Int {
+        return UserDefaults.standard.integer(forKey: checklistIndexKey)
+    }
+    
+    
 }

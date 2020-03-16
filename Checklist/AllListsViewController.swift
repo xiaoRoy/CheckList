@@ -16,20 +16,30 @@ enum ChecklistDetailType: String {
 }
 
 
-class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate {
+class AllListsViewController: UITableViewController,
+ListDetailViewControllerDelegate, UINavigationControllerDelegate {
     
     let cellIdentifier = "CheckListCell"
+    
+    let segueIdentifierShowChecklist = "ShowChecklist"
     
     var dataModel: DataModel!
     
     override func viewDidLoad() {
+        print("trail:viewDidLoad")
         super.viewDidLoad()
+        navigationController?.delegate = self
+        let index = dataModel.getChecklistIndex()
+        if index != -1 {
+            let checkList = dataModel.allChecklists[index]
+            performSegue(withIdentifier: segueIdentifierShowChecklist, sender: checkList)
+        }
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowChecklist" {
+        if segue.identifier == segueIdentifierShowChecklist {
             let destination = segue.destination as! ChecklistViewController
             destination.checklist = sender as? Checklist
         } else if segue.identifier == ChecklistDetailType.addChecklist.rawValue {
@@ -80,8 +90,10 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     
     // MARK:- Table View Delegate(UITableViewDelegate)
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selsctedChecklist = dataModel.allChecklists[indexPath.row]
-        performSegue(withIdentifier: "ShowChecklist", sender: selsctedChecklist)
+        let index = indexPath.row
+        let selsctedChecklist = dataModel.allChecklists[index]
+        dataModel.store(checklistIndex: index)
+        performSegue(withIdentifier: segueIdentifierShowChecklist, sender: selsctedChecklist)
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -96,5 +108,15 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         let checklist = dataModel.allChecklists[indexPath.row]
         destiantonController.checklistToEdit = checklist
         navigationController?.pushViewController(destiantonController, animated: true)
+    }
+    
+    
+
+    //MARK:- Navigation Controller Delegate
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        print("trail:navigationControllerWillShow")
+        if viewController === self {
+            dataModel.resetChecklistIndex()
+        }
     }
 }

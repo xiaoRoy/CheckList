@@ -26,16 +26,18 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate {
     var dataModel: DataModel!
     
     override func viewDidLoad() {
-        print("trail:viewDidLoad")
         super.viewDidLoad()
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("trail:viewDidAppear")
         navigationController?.delegate = self
-        let index = dataModel.getChecklistIndex()
-        if index != -1 {
+        let index = dataModel.indexOfSelectedChecklist
+        if index > -1 && index < dataModel.allChecklists.count {
             let checkList = dataModel.allChecklists[index]
             performSegue(withIdentifier: segueIdentifierShowChecklist, sender: checkList)
         }
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -92,7 +94,7 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let index = indexPath.row
         let selsctedChecklist = dataModel.allChecklists[index]
-        dataModel.store(checklistIndex: index)
+        dataModel.indexOfSelectedChecklist = index
         performSegue(withIdentifier: segueIdentifierShowChecklist, sender: selsctedChecklist)
     }
     
@@ -116,7 +118,7 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         print("trail:navigationControllerWillShow")
         if viewController === self {
-            dataModel.resetChecklistIndex()
+            dataModel.indexOfSelectedChecklist = -1
         }
     }
 }

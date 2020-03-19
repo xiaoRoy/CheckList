@@ -26,4 +26,12 @@ class Checklist: NSObject, Codable {
         self.name = name
         super.init()
     }
+    
+    func countCompletedItems() -> Int {
+        var result = 0
+        for checklistItem in checklistItems where !checklistItem.completed {
+            result ++
+        }
+        return result
+    }
 }

@@ -66,21 +66,45 @@
 		C467E9BC2221460400CBC3D7 /* Checklist */ = {
 			isa = PBXGroup;
 			children = (
-				C467E9BD2221460400CBC3D7 /* AppDelegate.swift */,
-				C467E9BF2221460400CBC3D7 /* ChecklistViewController.swift */,
-				C4FDA3E123ABCFE300A3CFC1 /* AllListsViewController.swift */,
-				C467E9C12221460400CBC3D7 /* Main.storyboard */,
-				C467E9C42221460500CBC3D7 /* Assets.xcassets */,
-				C467E9C62221460500CBC3D7 /* LaunchScreen.storyboard */,
+				C4F5020424226B3400C42AD5 /* View Controllers */,
+				C4F5020324226AD600C42AD5 /* Data Models */,
+				C4F5020524226B5500C42AD5 /* Resources */,
 				C467E9C92221460500CBC3D7 /* Info.plist */,
-				C403139722D2395900FA86B4 /* ItemDetialViewController.swift */,
-				C4EEF2D22414B5C000490D84 /* ListDetailViewController.swift */,
-				C4FE497D23AD2CAB00AF43C4 /* Checklist.swift */,
-				C4075FCB22D052DB006619AC /* ChecklistItem.swift */,
+				C467E9BD2221460400CBC3D7 /* AppDelegate.swift */,
 				C467E9BB2221460400CBC3D7 /* Products */,
-				C4093C8A241E01B900FE930F /* DataModel.swift */,
 			);
 			path = Checklist;
+			sourceTree = "<group>";
+		};
+		C4F5020324226AD600C42AD5 /* Data Models */ = {
+			isa = PBXGroup;
+			children = (
+				C4FE497D23AD2CAB00AF43C4 /* Checklist.swift */,
+				C4075FCB22D052DB006619AC /* ChecklistItem.swift */,
+				C4093C8A241E01B900FE930F /* DataModel.swift */,
+			);
+			path = "Data Models";
+			sourceTree = "<group>";
+		};
+		C4F5020424226B3400C42AD5 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C4FDA3E123ABCFE300A3CFC1 /* AllListsViewController.swift */,
+				C4EEF2D22414B5C000490D84 /* ListDetailViewController.swift */,
+				C467E9BF2221460400CBC3D7 /* ChecklistViewController.swift */,
+				C403139722D2395900FA86B4 /* ItemDetialViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		C4F5020524226B5500C42AD5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C467E9C12221460400CBC3D7 /* Main.storyboard */,
+				C467E9C62221460500CBC3D7 /* LaunchScreen.storyboard */,
+				C467E9C42221460500CBC3D7 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

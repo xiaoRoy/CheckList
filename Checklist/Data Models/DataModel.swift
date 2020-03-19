@@ -13,6 +13,7 @@ class DataModel {
     var allChecklists = [Checklist]()
     
     static let checklistIndexKey = "ChecklistIndex"
+    static let checklistFirstTimekey = "FirstTime"
     
     var indexOfSelectedChecklist: Int {
         get {
@@ -27,6 +28,7 @@ class DataModel {
     init() {
         loadChecklists()
         registerDefaults()
+        handleFirstTime()
     }
     
     func documentDirectory() -> URL{
@@ -63,7 +65,19 @@ class DataModel {
     
     //MARK:- User Default
     private func registerDefaults() {
-        let defaultChecklistIndexDictionary = [DataModel.checklistIndexKey: -1]
+        let defaultChecklistIndexDictionary = [DataModel.checklistIndexKey: -1, DataModel.checklistFirstTimekey: true]
+        as [String: Any]
         UserDefaults.standard.register(defaults: defaultChecklistIndexDictionary)
+    }
+    
+    private func handleFirstTime() {
+        let userDefault = UserDefaults.standard
+        let isFirstTime = userDefault.bool(forKey: DataModel.checklistFirstTimekey)
+        if isFirstTime {
+            let checklist = Checklist(name: "List")
+            allChecklists.append(checklist)
+            indexOfSelectedChecklist = 0
+            userDefault.set(false, forKey: DataModel.checklistFirstTimekey)
+        }
     }
 }

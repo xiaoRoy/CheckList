@@ -27,7 +27,7 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -83,10 +83,25 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        // remove the tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier) in viewDidLoad()
+//        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+//        let checklist = dataModel.allChecklists[indexPath.row]
+//        cell.textLabel?.text = checklist.name
+//        cell.accessoryType = UITableViewCell.AccessoryType.detailDisclosureButton
+//        return cell
+        
+        let cell: UITableViewCell!
+        if let cellToCheck = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) {
+            cell = cellToCheck
+        } else {
+            cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellIdentifier)
+        }
         let checklist = dataModel.allChecklists[indexPath.row]
-        cell.textLabel?.text = checklist.name
-        cell.accessoryType = UITableViewCell.AccessoryType.detailDisclosureButton
+        cell.textLabel!.text = checklist.name
+        cell.accessoryType = .detailDisclosureButton
+        if let detailLabel = cell.detailTextLabel {
+            detailLabel.text = "\(checklist.countCompletedItems()) Remaining"
+        }
         return cell
     }
     

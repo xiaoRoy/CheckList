@@ -30,7 +30,7 @@ class Checklist: NSObject, Codable {
     func countCompletedItems() -> Int {
         var result = 0
         for checklistItem in checklistItems where !checklistItem.completed {
-            result ++
+            result += 1
         }
         return result
     }

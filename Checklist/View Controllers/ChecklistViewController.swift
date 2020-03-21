@@ -8,28 +8,23 @@
 
 import UIKit
 
+
+protocol ChecklistViewControllerDelegate: class {
+    func checkListDidAddItem(_ hecklistViewController: ChecklistViewController)
+    func checkListDidToggleItem(_ hecklistViewController: ChecklistViewController, checklist: Checklist)
+    func checkListDidRemovedItem(_ hecklistViewController: ChecklistViewController)
+}
+
 class ChecklistViewController: UITableViewController, ItemDetailViewControllerDelegate {
     
     var checklist: Checklist!
 //    var checkListItemArray: Array = [ChecklistItem]()
+    
+    weak var delegate: ChecklistViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = checklist.name
-//        loadChecklistItems()
-        // Do any additional setup after loading the view, typically from a nib.
-//        navigationController?.navigationBar.prefersLargeTitles = true
-//        let todos = ["Walk the dog", "Brush my teeth", "Learn iOS develoment",
-//                     "Soccer practice", "Eat ice cream"]
-//        for todo in todos {
-//            let checkListItem = ChecklistItem()
-//            checkListItem.todo = todo
-//            checkListItemArray.append(checkListItem)
-//        }
-//        print("Document folder is \(documentsDirectory())")
-//        print("Data file path is \(dataFilePath())")
-//        navigationController?.navigationBar.prefersLargeTitles = true
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -56,29 +51,6 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         return documentsDirectory().appendingPathComponent("CheckList.plist")
     }
     
-//    func saveChecklistItems() {
-//        let encoder = PropertyListEncoder()
-//        do {
-//            let data = try encoder.encode(checkListItemArray)
-//            try data.write(to: dataFilePath(), options: Data.WritingOptions.atomic)
-//        } catch {
-//            print("Error encoding tiem arry: \(error.localizedDescription)")
-//        }
-//    }
-    
-//    func loadChecklistItems() {
-//        let path = dataFilePath()
-//        if let data = try? Data(contentsOf: path) {
-//            let decoder = PropertyListDecoder()
-//            do {
-//                checkListItemArray = try decoder.decode([ChecklistItem].self, from: data)
-//            } catch {
-//                print("Error decoding item array: \(error.localizedDescription)")
-//            }
-//        }
-//    }
-    
-    
     // MARK:- Table View Data Source(UITableViewDataSource)
     override func tableView(_ tableView: UITableView,
                             numberOfRowsInSection section: Int) -> Int {
@@ -102,15 +74,14 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
             let item = getCheckListItem(at: indexPath)
             item.toggle()
             configureCheckMark(for: cell, with: item)
+            delegate?.checkListDidToggleItem(self, checklist: checklist)
         }
         tableView.deselectRow(at: indexPath, animated: true)
-//        saveChecklistItems()
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         checklist.checklistItems.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
-//        saveChecklistItems()
     }
     
     // MARK:- Item Detial View Controller Delegates
@@ -120,7 +91,6 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     
     func itemDetailViewController(_ controller: ItemDetialViewController, didFinishAdding item: ChecklistItem) {
         addItemViewForController(controller, didFinishItem: item)
-//        saveChecklistItems()
         navigationController?.popViewController(animated: true)
     }
     
@@ -131,7 +101,6 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
                 configureLabel(for: cell, with: item)
             }
         }
-//        saveChecklistItems()
         navigationController?.popViewController(animated: true)
     }
     

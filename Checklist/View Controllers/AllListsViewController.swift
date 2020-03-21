@@ -17,7 +17,8 @@ enum ChecklistDetailType: String {
 
 
 class AllListsViewController: UITableViewController,
-ListDetailViewControllerDelegate, UINavigationControllerDelegate {
+ListDetailViewControllerDelegate, UINavigationControllerDelegate, ChecklistViewControllerDelegate {
+    
     
     let cellIdentifier = "CheckListCell"
     
@@ -27,7 +28,7 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        //        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -44,6 +45,7 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate {
         if segue.identifier == segueIdentifierShowChecklist {
             let destination = segue.destination as! ChecklistViewController
             destination.checklist = sender as? Checklist
+            destination.delegate = self
         } else if segue.identifier == ChecklistDetailType.addChecklist.rawValue {
             let controller = segue.destination as! ListDetailViewController
             controller.delegate = self
@@ -84,11 +86,11 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // remove the tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier) in viewDidLoad()
-//        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-//        let checklist = dataModel.allChecklists[indexPath.row]
-//        cell.textLabel?.text = checklist.name
-//        cell.accessoryType = UITableViewCell.AccessoryType.detailDisclosureButton
-//        return cell
+        //        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        //        let checklist = dataModel.allChecklists[indexPath.row]
+        //        cell.textLabel?.text = checklist.name
+        //        cell.accessoryType = UITableViewCell.AccessoryType.detailDisclosureButton
+        //        return cell
         
         let cell: UITableViewCell!
         if let cellToCheck = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) {
@@ -128,12 +130,30 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate {
     }
     
     
-
+    
     //MARK:- Navigation Controller Delegate
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         print("trail:navigationControllerWillShow")
         if viewController === self {
             dataModel.indexOfSelectedChecklist = -1
         }
+    }
+    
+    
+    func checkListDidAddItem(_ hecklistViewController: ChecklistViewController) {
+        
+    }
+    
+    func checkListDidToggleItem(_ hecklistViewController: ChecklistViewController, checklist: Checklist) {
+        if let index = dataModel.allChecklists.index(of: checklist) {
+            let indexPath = IndexPath(row: index, section: 0)
+            if let cell = tableView.cellForRow(at: indexPath){
+                cell.detailTextLabel!.text = "\(checklist.countCompletedItems()) Remaining."
+            }
+        }
+    }
+    
+    func checkListDidRemovedItem(_ hecklistViewController: ChecklistViewController) {
+        
     }
 }

@@ -40,9 +40,9 @@ class Checklist: NSObject, Codable {
 
 enum ChecklistIcon: String, Codable, CaseIterable {
     case noIcon = "No Icon"
-    case appointmnets = "Appoinments"
+    case appointmnets = "Appointments"
     case birthday = "Birthdays"
-    case chors = "Chors"
+    case chores = "Chores"
     case drinks = "Drinks"
     case folder = "Folder"
     case groceries = "Groceries"

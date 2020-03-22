@@ -79,7 +79,11 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate, ChecklistViewC
             if let cell = tableView.cellForRow(at: indexPath) {
                 dataModel.sortChecklist()
                 cell.textLabel!.text = checklist.name
+                if let iconImage = cell.imageView {
+                    iconImage.image = UIImage(named: checklist.icon.rawValue)
+                }
             }
+            
         }
         navigationController?.popViewController(animated: true)
     }
@@ -150,13 +154,7 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate, ChecklistViewC
     }
     
     
-    //    private func findIndexPath(of checkList: Checklist) -> IndexPath? {
-    //        let indexPath: IndexPath?
-    //        if let index = dataModel.allChecklists.index(of: checkList) {
-    //
-    //        }
-    //    }
-    
+    //MARK:- Checklist View Controller Delegate
     private func updateCount(for checklist: Checklist) {
         if let index = dataModel.allChecklists.index(of: checklist) {
             let indexPath = IndexPath(row: index, section: 0)

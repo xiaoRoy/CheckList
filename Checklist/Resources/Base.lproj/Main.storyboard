@@ -252,7 +252,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="le6-uH-otY" kind="show" id="ERm-bX-WJg"/>
+                                            <segue destination="le6-uH-otY" kind="show" identifier="PickIcon" id="FsW-qy-aux"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -278,6 +278,7 @@
                     <connections>
                         <outlet property="doneBarButton" destination="gaf-k5-gw7" id="hNI-pW-B6j"/>
                         <outlet property="iconImage" destination="wC0-bj-f7w" id="T4e-i3-bdK"/>
+                        <outlet property="imageChecklistIcon" destination="wC0-bj-f7w" id="4Fu-cX-YnO"/>
                         <outlet property="textField" destination="VHd-co-9zy" id="HP8-8e-ZkI"/>
                     </connections>
                 </tableViewController>

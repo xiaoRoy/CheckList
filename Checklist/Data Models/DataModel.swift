@@ -80,4 +80,10 @@ class DataModel {
             userDefault.set(false, forKey: DataModel.checklistFirstTimekey)
         }
     }
+    
+    func sortChecklist() {
+        allChecklists.sort(by: {one, anohter -> Bool in
+            one.name.localizedStandardCompare(anohter.name) == .orderedAscending
+        })
+    }
 }

@@ -10,9 +10,9 @@ import UIKit
 
 
 protocol ChecklistViewControllerDelegate: class {
-    func checkListDidAddItem(_ hecklistViewController: ChecklistViewController)
+    func checkListDidAddItem(_ hecklistViewController: ChecklistViewController, checklist: Checklist)
     func checkListDidToggleItem(_ hecklistViewController: ChecklistViewController, checklist: Checklist)
-    func checkListDidRemovedItem(_ hecklistViewController: ChecklistViewController)
+    func checkListDidRemovedItem(_ hecklistViewController: ChecklistViewController, checklist: Checklist)
 }
 
 class ChecklistViewController: UITableViewController, ItemDetailViewControllerDelegate {
@@ -81,6 +81,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         checklist.checklistItems.remove(at: indexPath.row)
+        delegate?.checkListDidAddItem(self, checklist: checklist)
         tableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
@@ -132,6 +133,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         checklist.checklistItems.append(item)
         let indexPath = IndexPath(row: newIndex, section: 0)
         let indexPaths = [indexPath]
+        delegate?.checkListDidAddItem(self, checklist: checklist)
         tableView.insertRows(at: indexPaths, with:.automatic)
     }
 }

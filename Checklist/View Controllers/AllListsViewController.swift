@@ -31,6 +31,11 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate, ChecklistViewC
         //        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //        tableView.reloadData()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         print("trail:viewDidAppear")
         navigationController?.delegate = self
@@ -59,11 +64,12 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate, ChecklistViewC
     }
     
     func listDetailViewController(_ controller: ListDetailViewController, didFinishedAdding checklist: Checklist) {
-        let newRowIndex = dataModel.allChecklists.count
         dataModel.allChecklists.append(checklist)
-        let indexPath = IndexPath(row: newRowIndex, section: 0)
-        let indexPaths = [indexPath]
-        tableView.insertRows(at: indexPaths, with: .automatic)
+        dataModel.sortChecklist()
+        if let index = dataModel.allChecklists.index(of: checklist) {
+            let indexPath = IndexPath(row: index, section: 0)
+            tableView.insertRows(at: [indexPath], with: .automatic)
+        }
         navigationController?.popViewController(animated: true)
     }
     
@@ -71,6 +77,7 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate, ChecklistViewC
         if let index = dataModel.allChecklists.index(of: checklist) {
             let indexPath = IndexPath(row: index, section: 0)
             if let cell = tableView.cellForRow(at: indexPath) {
+                dataModel.sortChecklist()
                 cell.textLabel!.text = checklist.name
             }
         }
@@ -102,7 +109,10 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate, ChecklistViewC
         cell.textLabel!.text = checklist.name
         cell.accessoryType = .detailDisclosureButton
         if let detailLabel = cell.detailTextLabel {
-            detailLabel.text = "\(checklist.countCompletedItems()) Remaining"
+            detailLabel.text = getCountMessage(for: checklist)
+        }
+        if let iconImage = cell.imageView {
+            iconImage.image = UIImage(named: checklist.icon.rawValue)
         }
         return cell
     }
@@ -140,20 +150,42 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate, ChecklistViewC
     }
     
     
-    func checkListDidAddItem(_ hecklistViewController: ChecklistViewController) {
-        
-    }
+    //    private func findIndexPath(of checkList: Checklist) -> IndexPath? {
+    //        let indexPath: IndexPath?
+    //        if let index = dataModel.allChecklists.index(of: checkList) {
+    //
+    //        }
+    //    }
     
-    func checkListDidToggleItem(_ hecklistViewController: ChecklistViewController, checklist: Checklist) {
+    private func updateCount(for checklist: Checklist) {
         if let index = dataModel.allChecklists.index(of: checklist) {
             let indexPath = IndexPath(row: index, section: 0)
-            if let cell = tableView.cellForRow(at: indexPath){
-                cell.detailTextLabel!.text = "\(checklist.countCompletedItems()) Remaining."
+            if let cell = tableView.cellForRow(at: indexPath) {
+                cell.detailTextLabel!.text = getCountMessage(for: checklist)
             }
         }
     }
     
-    func checkListDidRemovedItem(_ hecklistViewController: ChecklistViewController) {
-        
+    private func getCountMessage(for checklist: Checklist) -> String {
+        let message: String!
+        if checklist.checklistItems.count == 0 {
+            message = "(No Items)"
+        } else  {
+            let completedCount = checklist.countCompletedItems()
+            message = completedCount == 0 ? "All Done!" : "\(completedCount) Ramaining."
+        }
+        return message
+    }
+    
+    func checkListDidAddItem(_ hecklistViewController: ChecklistViewController, checklist: Checklist) {
+        updateCount(for: checklist)
+    }
+    
+    func checkListDidToggleItem(_ hecklistViewController: ChecklistViewController, checklist: Checklist) {
+        updateCount(for: checklist)
+    }
+    
+    func checkListDidRemovedItem(_ hecklistViewController: ChecklistViewController, checklist: Checklist) {
+        updateCount(for: checklist)
     }
 }

@@ -10,6 +10,7 @@ import UIKit
 
 class Checklist: NSObject, Codable {
     var name: String
+    var icon: ChecklistIcon
     var checklistItems = Array<ChecklistItem>()
     //    var checklistItmeList = [ChecklistItem]()
     
@@ -24,14 +25,28 @@ class Checklist: NSObject, Codable {
     
     init(name: String) {
         self.name = name
+        icon = .noIcon
         super.init()
     }
     
+    
     func countCompletedItems() -> Int {
-        var result = 0
-        for checklistItem in checklistItems where !checklistItem.completed {
-            result += 1
-        }
-        return result
+        return checklistItems.reduce(0, {
+            (accumulator: Int, checklistItem: ChecklistItem) -> Int in
+            accumulator + (checklistItem.completed ? 1 : 0)
+        })
     }
+}
+
+enum ChecklistIcon: String, Codable, CaseIterable {
+    case noIcon = "No Icon"
+    case appointmnets = "Appoinments"
+    case birthday = "Birthdays"
+    case chors = "Chors"
+    case drinks = "Drinks"
+    case folder = "Folder"
+    case groceries = "Groceries"
+    case inbox = "Inbox"
+    case photos = "Photos"
+    case trips = "Trips"
 }

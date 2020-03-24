@@ -21,6 +21,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController = window!.rootViewController as! UINavigationController
         let allListViewController = navigationController.viewControllers[0] as! AllListsViewController
         allListViewController.dataModel = self.dataModle
+        
+        let cetner = UNUserNotificationCenter.current()
+        cetner.requestAuthorization(options: [.alert, .sound], completionHandler: ({
+            (granted: Bool, error: Error?) in
+            if granted {
+                print("Permission granted")
+            } else {
+                print("Permission denied")
+            }
+        }))
         return true
     }
 

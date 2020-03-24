@@ -29,6 +29,7 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate, ChecklistViewC
     override func viewDidLoad() {
         super.viewDidLoad()
         //        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        showTestNotification()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -185,5 +186,18 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate, ChecklistViewC
     
     func checkListDidRemovedItem(_ hecklistViewController: ChecklistViewController, checklist: Checklist) {
         updateCount(for: checklist)
+    }
+    
+    
+    private func showTestNotification() {
+        print("showTestNotification")
+        let content = UNMutableNotificationContent()
+        content.title = "Hello"
+        content.body = "I am a local notification"
+        content.sound = .default
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 4, repeats: false)
+        let request = UNNotificationRequest(identifier: "FirstNotification", content: content, trigger: trigger)
+        let center = UNUserNotificationCenter.current()
+        center.add(request)
     }
 }

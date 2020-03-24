@@ -15,6 +15,8 @@ protocol IconPickerViewControllerDelegate: class {
 class IconPickerViewController: UITableViewController {
     
     weak var delegate: IconPickerViewControllerDelegate?
+    
+    var selectedChecklistIcon: ChecklistIcon?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +37,9 @@ class IconPickerViewController: UITableViewController {
         }
         let lableIconName = cell.textLabel!
         lableIconName.text = icon.rawValue
+        if icon == selectedChecklistIcon {
+            tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableView.ScrollPosition.none)
+        }
         return cell
     }
     

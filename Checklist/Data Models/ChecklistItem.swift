@@ -12,9 +12,9 @@ class ChecklistItem: NSObject, Codable {
     var todo: String
     var completed: Bool
     
-    override init() {
-        todo = ""
-        completed = false
+    init(todo: String = "", completed: Bool = false) {
+        self.todo = todo
+        self.completed = completed
         super.init()
     }
     

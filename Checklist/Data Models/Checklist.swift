@@ -23,9 +23,9 @@ class Checklist: NSObject, Codable {
     //    var checklistItmeList: [ChecklistItem] = []
     
     
-    init(name: String) {
+    init(name: String, icon: ChecklistIcon = .noIcon) {
         self.name = name
-        icon = .noIcon
+        self.icon = icon
         super.init()
     }
     

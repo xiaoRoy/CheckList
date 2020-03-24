@@ -72,8 +72,7 @@ class ItemDetialViewController: UITableViewController, UITextFieldDelegate {
             checkListItem.todo = textField.text!
             itemDetailViewControllerDelegate?.itemDetailViewController(self, didFininishEditing: checkListItem)
         }  else {
-            let item = ChecklistItem()
-            item.todo = textField.text!
+            let item = ChecklistItem(todo: textField.text!)
             itemDetailViewControllerDelegate?.itemDetailViewController(self, didFinishAdding: item)
         }
     }

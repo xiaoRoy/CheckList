@@ -54,6 +54,7 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, Icon
         if segue.identifier == "PickIcon" {
             let iconPickerViewController = segue.destination as! IconPickerViewController
             iconPickerViewController.delegate = self
+            iconPickerViewController.selectedChecklistIcon = selectedCheckListIcon
         }
     }
     
@@ -71,8 +72,7 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate, Icon
             checklist.icon = selectedCheckListIcon
             delegate?.listDetailViewController(self, didFinishedEditing: checklist)
         } else {
-            let checklist = Checklist(name: textField.text!)
-            checklist.icon = selectedCheckListIcon
+            let checklist = Checklist(name: textField.text!, icon: selectedCheckListIcon)
             delegate?.listDetailViewController(self, didFinishedAdding: checklist)
         }
     }

@@ -9,7 +9,7 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
     
@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         cetner.requestAuthorization(options: [.alert, .sound], completionHandler: ({
             (granted: Bool, error: Error?) in
             if granted {
+                cetner.delegate = self
                 print("Permission granted")
             } else {
                 print("Permission denied")
@@ -62,6 +63,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func saveChecklistArray() {
         dataModle.saveCheckLists()
+    }
+    
+    
+    //MARK:- UN User Notification Center Delegate
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        print("Received local notification \(notification)")
     }
 }
 

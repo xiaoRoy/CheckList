@@ -195,7 +195,7 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate, ChecklistViewC
         content.title = "Hello"
         content.body = "I am a local notification"
         content.sound = .default
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 4, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 7, repeats: false)
         let request = UNNotificationRequest(identifier: "FirstNotification", content: content, trigger: trigger)
         let center = UNUserNotificationCenter.current()
         center.add(request)

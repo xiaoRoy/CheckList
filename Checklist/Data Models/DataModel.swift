@@ -14,6 +14,7 @@ class DataModel {
     
     static let checklistIndexKey = "ChecklistIndex"
     static let checklistFirstTimekey = "FirstTime"
+    static let checklistItemIdKey = "ChecklistItemId"
     
     var indexOfSelectedChecklist: Int {
         get {
@@ -85,5 +86,13 @@ class DataModel {
         allChecklists.sort(by: {one, anohter -> Bool in
             one.name.localizedStandardCompare(anohter.name) == .orderedAscending
         })
+    }
+    
+    //MARK:- Checklist Item
+    class func nextChecklistItemId() -> Int {
+        let userDefaults = UserDefaults.standard
+        let itemId = userDefaults.integer(forKey: DataModel.checklistItemIdKey)
+        userDefaults.set(itemId + 1, forKey: DataModel.checklistItemIdKey)
+        return itemId
     }
 }

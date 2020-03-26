@@ -19,6 +19,7 @@ class ChecklistItem: NSObject, Codable {
     init(todo: String = "", completed: Bool = false) {
         self.todo = todo
         self.completed = completed
+        itemId = DataModel.nextChecklistItemId()
         super.init()
     }
     

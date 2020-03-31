@@ -79,6 +79,7 @@ class DataModel {
             allChecklists.append(checklist)
             indexOfSelectedChecklist = 0
             userDefault.set(false, forKey: DataModel.checklistFirstTimekey)
+            userDefault.synchronize()
         }
     }
     

@@ -30,10 +30,10 @@ class Checklist: NSObject, Codable {
     }
     
     
-    func countCompletedItems() -> Int {
+    func countUnCompletedItems() -> Int {
         return checklistItems.reduce(0, {
             (accumulator: Int, checklistItem: ChecklistItem) -> Int in
-            accumulator + (checklistItem.completed ? 1 : 0)
+            accumulator + (checklistItem.completed ? 0 : 1)
         })
     }
 }

@@ -170,8 +170,8 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate, ChecklistViewC
         if checklist.checklistItems.count == 0 {
             message = "(No Items)"
         } else  {
-            let completedCount = checklist.countCompletedItems()
-            message = completedCount == 0 ? "All Done!" : "\(completedCount) Ramaining."
+            let unCompletedCount = checklist.countUnCompletedItems()
+            message = unCompletedCount == 0 ? "All Done!" : "\(unCompletedCount) Ramaining."
         }
         return message
     }

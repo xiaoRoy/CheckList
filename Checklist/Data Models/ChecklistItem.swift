@@ -13,7 +13,7 @@ class ChecklistItem: NSObject, Codable {
     var itemId = -1
     var todo: String
     var completed: Bool
-    var dueDate  = Data()
+    var dueDate  = Date()
     var shouldRemind = false
     
     init(todo: String = "", completed: Bool = false) {

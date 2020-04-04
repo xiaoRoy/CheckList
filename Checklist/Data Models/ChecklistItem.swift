@@ -6,7 +6,9 @@
 //  Copyright © 2019 Jerry Li. All rights reserved.
 //
 
+
 import Foundation
+import UserNotifications
 
 class ChecklistItem: NSObject, Codable {
     
@@ -25,5 +27,25 @@ class ChecklistItem: NSObject, Codable {
     
     func toggle() {
         completed = !completed
+    }
+    
+    func scheduleNotification() {
+        if shouldRemind && dueDate > Date() {
+            let conent = UNMutableNotificationContent()
+            conent.title = "Reminder:"
+            conent.body = todo
+            conent.sound = UNNotificationSound.default
+            
+            
+            var dueDateComponent = Calendar(identifier: .gregorian).dateComponents([.year, .month, .day, .hour, .minute], from: dueDate)
+            if let minute = dueDateComponent.minute {
+                dueDateComponent.minute = minute - 30
+            }
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dueDateComponent, repeats: false)
+            
+            let request = UNNotificationRequest(identifier: "\(itemId)", content:conent , trigger: trigger)
+    
+            UNUserNotificationCenter.current().add(request)
+        }
     }
 }

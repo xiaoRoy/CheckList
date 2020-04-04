@@ -29,7 +29,7 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate, ChecklistViewC
     override func viewDidLoad() {
         super.viewDidLoad()
         //        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        showTestNotification()
+//        showTestNotification()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -189,15 +189,15 @@ ListDetailViewControllerDelegate, UINavigationControllerDelegate, ChecklistViewC
     }
     
     
-    private func showTestNotification() {
-        print("showTestNotification")
-        let content = UNMutableNotificationContent()
-        content.title = "Hello"
-        content.body = "I am a local notification"
-        content.sound = .default
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 7, repeats: false)
-        let request = UNNotificationRequest(identifier: "FirstNotification", content: content, trigger: trigger)
-        let center = UNUserNotificationCenter.current()
-        center.add(request)
-    }
+//    private func showTestNotification() {
+//        print("showTestNotification")
+//        let content = UNMutableNotificationContent()
+//        content.title = "Hello"
+//        content.body = "I am a local notification"
+//        content.sound = .default
+//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 7, repeats: false)
+//        let request = UNNotificationRequest(identifier: "FirstNotification", content: content, trigger: trigger)
+//        let center = UNUserNotificationCenter.current()
+//        center.add(request)
+//    }
 }

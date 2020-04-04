@@ -24,7 +24,10 @@ class ItemDetialViewController: UITableViewController, UITextFieldDelegate {
     
     private static let dueDateSectionIndex = 1
     
-    private static let dueDateSectionRow = 2
+    private static let dueDateSectionRow = 1
+    
+    private static let datePickerSectionRow = 2
+    
     
     @IBOutlet weak var textField: UITextField!
     
@@ -86,7 +89,15 @@ class ItemDetialViewController: UITableViewController, UITextFieldDelegate {
         return cell
     }
     
-    
+    override func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {
+        var newIndexPath = indexPath
+        if isDatePickerRow(at: indexPath) {
+            newIndexPath = IndexPath(row: 0, section: ItemDetialViewController.dueDateSectionIndex)
+        }
+        let count = super.tableView(tableView, indentationLevelForRowAt: newIndexPath)
+        print("indentationLevelForRowAt:\(count)")
+        return count
+    }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         var height:CGFloat = 0.0
@@ -99,12 +110,33 @@ class ItemDetialViewController: UITableViewController, UITextFieldDelegate {
     }
     
     private func isDatePickerRow(at indexPath: IndexPath)-> Bool{
+        return indexPath.section == ItemDetialViewController.dueDateSectionIndex && indexPath.row == ItemDetialViewController.datePickerSectionRow
+    }
+    
+    private func isDueDateRow(at indexPath: IndexPath) -> Bool {
         return indexPath.section == ItemDetialViewController.dueDateSectionIndex && indexPath.row == ItemDetialViewController.dueDateSectionRow
     }
     
     //MARK:- Tabel View Delegates
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        return nil
+        var willSelectIndexPath: IndexPath? = nil
+        if isDueDateRow(at: indexPath) {
+            willSelectIndexPath = indexPath
+        }
+        return willSelectIndexPath
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        textField.resignFirstResponder()
+        if isDueDateRow(at: indexPath) {
+            if isDatePickerVisible {
+                hideDatePicker()
+            } else {
+                showDatePicker()
+            }
+            
+        }
     }
     
     //MARK:- Text Field Delegates
@@ -123,6 +155,10 @@ class ItemDetialViewController: UITableViewController, UITextFieldDelegate {
         barButtonItemDone.isEnabled = false
         return true
     }
+        
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        hideDatePicker()
+    }
     
     //MARK:- Actions
     @IBAction func done() {
@@ -130,11 +166,13 @@ class ItemDetialViewController: UITableViewController, UITextFieldDelegate {
             checkListItem.todo = textField.text!
             checkListItem.shouldRemind = remindMeSwitch.isOn
             checkListItem.dueDate = dueDate
+            checkListItem.scheduleNotification()
             itemDetailViewControllerDelegate?.itemDetailViewController(self, didFininishEditing: checkListItem)
         }  else {
             let item = ChecklistItem(todo: textField.text!)
             item.shouldRemind = remindMeSwitch.isOn
             item.dueDate = dueDate
+            item.scheduleNotification()
             itemDetailViewControllerDelegate?.itemDetailViewController(self, didFinishAdding: item)
         }
     }
@@ -148,12 +186,34 @@ class ItemDetialViewController: UITableViewController, UITextFieldDelegate {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         formatter.timeStyle = .short
-        dueDateLabel.text = formatter.string(from: Date())
+        let result = formatter.string(from: dueDate)
+        dueDateLabel.text = result
     }
     
     func showDatePicker() {
         isDatePickerVisible = true
-        let indexPathDatePicker = IndexPath(row: 2, section: ItemDetialViewController.dueDateSectionIndex)
+        dueDateLabel.textColor = view.tintColor
+        let indexPathDatePicker = IndexPath(row: ItemDetialViewController.datePickerSectionRow, section: ItemDetialViewController.dueDateSectionIndex)
         tableView.insertRows(at: [indexPathDatePicker], with: .automatic)
+        datePicker.setDate(dueDate, animated: true)
+    }
+    
+    
+    
+    func hideDatePicker() {
+        if isDatePickerVisible {
+            isDatePickerVisible = false
+            dueDateLabel.textColor = UIColor.black
+            let indexPathDatePicker = IndexPath(row: ItemDetialViewController.datePickerSectionRow, section:
+                ItemDetialViewController.dueDateSectionIndex
+            )
+            tableView.deleteRows(at: [indexPathDatePicker], with: .fade)
+        }
+    }
+    
+    @IBAction
+    func dueDateChanged(_ datePicker: UIDatePicker) {
+        dueDate = datePicker.date
+        updateDueDate()
     }
 }
